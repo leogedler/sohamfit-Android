@@ -1,8 +1,8 @@
 package com.sohamfit.sohamfitapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -37,6 +37,12 @@ public class VideosList extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
+    private VideosAdapter mAdapter;
+    private int pastVisiblesItems, visibleItemCount, totalItemCount;
+    private boolean loading = true;
+    private int skip = 0;
+    private int videoPerLoad = 10;
+
 
     // Views
     private ProgressBar mTopProgressBar;
@@ -45,16 +51,27 @@ public class VideosList extends AppCompatActivity {
     private FloatingActionButton mFab;
     private Toolbar mToolbar;
 
-    private VideosAdapter mAdapter;
-    private int pastVisiblesItems, visibleItemCount, totalItemCount;
-    private boolean loading = true;
-    private int skip = 0;
-    private int videoPerLoad = 10;
+    // Filters
+    private boolean mFilters = false;
+    private boolean mFilterByVideoType = false;
+    private String mVideoType;
+    private boolean mFilterByVideoLevel = false;
+    private String mVideoLevel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_videos);
+
+        //Receiving Intents
+        if (getIntent().getExtras() != null){
+            mFilters = getIntent().getExtras().getBoolean("filters");
+            mFilterByVideoType = getIntent().getExtras().getBoolean("filterByVideoType");
+            mVideoType = getIntent().getExtras().getString("videoType");
+            mFilterByVideoLevel = getIntent().getExtras().getBoolean("filterByVideoLevel");
+            mVideoLevel = getIntent().getExtras().getString("videoLevel");
+        }
 
         // Views
         mTopProgressBar = (ProgressBar) findViewById(R.id.top_progress_bar);
@@ -67,8 +84,21 @@ public class VideosList extends AppCompatActivity {
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+                Intent intent = new Intent(VideosList.this, Filters.class);
+                if(mFilters){
+                    intent.putExtra("filters", mFilters);
+                    if(mFilterByVideoType){
+                        intent.putExtra("filterByVideoType", mFilterByVideoType);
+                        intent.putExtra("videoType", mVideoType);
+                    }
+                    if(mFilterByVideoLevel){
+                        intent.putExtra("filterByVideoLevel", mFilterByVideoLevel);
+                        intent.putExtra("videoLevel", mVideoLevel);
+                    }
+                }
+                startActivity(intent);
             }
         });
 
@@ -127,9 +157,35 @@ public class VideosList extends AppCompatActivity {
     public void getVideos(final int skip){
 
         RequestParams params = new RequestParams();
+
+        // Pagination
         params.add("limit", String.valueOf(videoPerLoad));
         params.add("skip", String.valueOf(skip));
+
+        //Filters
         params.add("order", Constants.VIDEO_NAME);
+
+        if (mFilterByVideoType || mFilterByVideoLevel) {
+            JSONObject filterBy = new JSONObject();
+            if(mFilterByVideoType){
+                try {
+                    filterBy.put("subcategory", mVideoType.toLowerCase());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(mFilterByVideoLevel){
+                try {
+                    filterBy.put("level", mVideoLevel.toLowerCase());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            params.add("where", filterBy.toString());
+        }
+
+
+
         HttpUtils.getVideos("/classes/Videos", params,  new JsonHttpResponseHandler() {
 
             @Override

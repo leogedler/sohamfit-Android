@@ -31,6 +31,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".Filters"
+            android:label="@string/title_activity_filters"
+            android:parentActivityName=".VideosList"
+            android:theme="@style/Theme.AppCompat.Light.Dialog">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.sohamfit.sohamfitapp.VideosList" />
+        </activity>
     </application>
 
 </manifest>

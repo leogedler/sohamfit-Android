@@ -1,4 +1,31 @@
 <resources>
-    <string name="app_name">SohamfitApp</string>
-    <string name="action_settings">Settings</string>
+    <string name="app_name">sohamfit</string>
+    <string name="action_settings">Opciones</string>
+    <string name="title_activity_filters">Filtros</string>
+
+
+    <!-- Filter -->
+    <string name="filter_button">Filtrar</string>
+
+
+    <!-- Spinner video type -->
+    <string name="spinner_type_video_title">Tipo de Video</string>
+    <string-array name="video_type_array">
+        <item>Todos</item>
+        <item>Clases</item>
+        <item>Secuencias cortas</item>
+        <item>Posturas</item>
+        <item>Correcciones</item>
+    </string-array>
+
+    <!-- Spinner video type -->
+    <string name="spinner_level_video_title">Nivel</string>
+    <string-array name="video_level_array">
+        <item>Todos</item>
+        <item>Básico</item>
+        <item>Intermedio</item>
+
+    </string-array>
 </resources>
+
+

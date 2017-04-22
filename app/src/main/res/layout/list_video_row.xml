@@ -25,10 +25,10 @@
             android:layout_height="wrap_content"
             android:maxLines="3"
             android:padding="8dp"
-            android:background="#CC303438"
+            android:background="@color/colorBackBlack"
             android:alpha="100"
-            android:textColor="#FFF"
-            android:textSize="10dp"
+            android:textColor="@color/colorWhite"
+            android:textSize="10sp"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />

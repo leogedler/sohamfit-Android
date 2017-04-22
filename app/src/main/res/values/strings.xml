@@ -24,8 +24,12 @@
         <item>Todos</item>
         <item>Básico</item>
         <item>Intermedio</item>
-
     </string-array>
+
+    <string name="order_byl_title">Ordenar por</string>
+    <string name="sort_by_alphabetically">Alfabéticamente</string>
+    <string name="sort_by_date">Fecha</string>
+
 </resources>
 
 

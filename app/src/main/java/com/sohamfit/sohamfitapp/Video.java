@@ -6,6 +6,7 @@ package com.sohamfit.sohamfitapp;
 
 public class Video {
     public String objectId;
+    public String createdAt;
     public String videoName;
     public String videoDescription;
     public String videoLevel;

@@ -1,8 +1,10 @@
 package com.sohamfit.sohamfitapp;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +14,14 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
+
+import static com.sohamfit.sohamfitapp.R.id.date;
+
+
 
 /**
  * Created by leonardogedler on 4/21/17.
@@ -20,6 +29,8 @@ import java.util.List;
 
 public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.CustomViewHolder> {
     private List<Video> feedVideosList;
+    protected SimpleDateFormat mFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+    protected SimpleDateFormat mFormatter2 = new SimpleDateFormat("dd/MM/yyy");
     private Context mContext;
 
 
@@ -49,6 +60,25 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.CustomView
         // Setting video info
         holder.textView.setText(videoItem.videoName);
         holder.timeView.setText(videoItem.videoDuration);
+        holder.levelView.setText(StringHelper.capitalize(videoItem.videoLevel));
+
+
+
+        try {
+            Date date = mFormatter.parse(videoItem.createdAt.replaceAll("Z$", "+0000"));
+            holder.dateView.setText(mFormatter2.format(date));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
+        if(videoItem.videoLevel.equals("básico")){
+            holder.levelView.setTextColor(ContextCompat.getColor(mContext, R.color.colorGreen));
+        }else if(videoItem.videoLevel.equals("intermedio")){
+            holder.levelView.setTextColor(ContextCompat.getColor(mContext, R.color.colorBrightOrange));
+        }else{
+            holder.levelView.setTextColor(ContextCompat.getColor(mContext, R.color.colorRed));
+        }
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +103,8 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.CustomView
         protected TextView textView;
         protected TextView timeView;
         protected CardView cardView;
+        protected TextView levelView;
+        protected TextView dateView;
 
 
         public CustomViewHolder(View view) {
@@ -81,8 +113,8 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.CustomView
             this.imageView = (ImageView) view.findViewById(R.id.thumbnail);
             this.textView = (TextView) view.findViewById(R.id.title);
             this.timeView = (TextView) view.findViewById(R.id.time);
-
-
+            this.levelView = (TextView) view.findViewById(R.id.level);
+            this.dateView = (TextView) view.findViewById(date);
         }
     }
 

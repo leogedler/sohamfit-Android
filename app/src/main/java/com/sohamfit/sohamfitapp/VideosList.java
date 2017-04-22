@@ -57,6 +57,8 @@ public class VideosList extends AppCompatActivity {
     private String mVideoType;
     private boolean mFilterByVideoLevel = false;
     private String mVideoLevel;
+    private boolean mSortBy = false;
+    private String mSortByString;
 
 
     @Override
@@ -71,6 +73,8 @@ public class VideosList extends AppCompatActivity {
             mVideoType = getIntent().getExtras().getString("videoType");
             mFilterByVideoLevel = getIntent().getExtras().getBoolean("filterByVideoLevel");
             mVideoLevel = getIntent().getExtras().getString("videoLevel");
+            mSortBy = getIntent().getExtras().getBoolean("sortBy");
+            mSortByString = getIntent().getExtras().getString("sortString");
         }
 
         // Views
@@ -97,6 +101,10 @@ public class VideosList extends AppCompatActivity {
                         intent.putExtra("filterByVideoLevel", mFilterByVideoLevel);
                         intent.putExtra("videoLevel", mVideoLevel);
                     }
+                    if(mSortBy){
+                        intent.putExtra("sortBy", true);
+                        intent.putExtra("sortString", mSortByString);
+                    }
                 }
                 startActivity(intent);
             }
@@ -116,22 +124,22 @@ public class VideosList extends AppCompatActivity {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy)
             {
-                // Check for scroll down
-                if(dy > 0) {
-                    visibleItemCount = mLayoutManager.getChildCount();
-                    totalItemCount = mLayoutManager.getItemCount();
-                    pastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
+            // Check for scroll down
+            if(dy > 0) {
+                visibleItemCount = mLayoutManager.getChildCount();
+                totalItemCount = mLayoutManager.getItemCount();
+                pastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
 
-                    if (loading) {
-                        if ( (visibleItemCount + pastVisiblesItems) >= totalItemCount) {
-                            loading = false;
-                            Log.v("...", "Last Item Wow !");
-                            mBottomProgressBar.setVisibility(View.VISIBLE);
-                            skip = skip + videoPerLoad;
-                            getVideos(skip);
-                        }
+                if (loading) {
+                    if ( (visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                        loading = false;
+                        Log.v("...", "Last Item Wow !");
+                        mBottomProgressBar.setVisibility(View.VISIBLE);
+                        skip = skip + videoPerLoad;
+                        getVideos(skip);
                     }
                 }
+            }
             }
         });
 
@@ -140,14 +148,14 @@ public class VideosList extends AppCompatActivity {
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mVideos.clear();
-                skip = 0;
-                getVideos(skip);
+            mVideos.clear();
+            skip = 0;
+            getVideos(skip);
             }
         });
         mSwipeRefreshLayout.setColorSchemeResources(
-                R.color.colorPrimary,
-                R.color.colorPrimaryDark);
+            R.color.colorPrimary,
+            R.color.colorPrimaryDark);
 
         // Get Videos
         getVideos(skip);
@@ -163,8 +171,11 @@ public class VideosList extends AppCompatActivity {
         params.add("skip", String.valueOf(skip));
 
         //Filters
-        params.add("order", Constants.VIDEO_NAME);
-
+        // Order by
+        if(mSortBy){
+            params.add("order", mSortByString);
+        }
+        // Filter by
         if (mFilterByVideoType || mFilterByVideoLevel) {
             JSONObject filterBy = new JSONObject();
             if(mFilterByVideoType){
@@ -210,6 +221,8 @@ public class VideosList extends AppCompatActivity {
                         video.videoDescription = videoJson.getString(Constants.VIDEO_DESCRIPTION);
                         video.videoDuration = videoJson.getString(Constants.VIDEO_DURATION);
                         video.videoLevel = videoJson.getString(Constants.VIDEO_LEVEL);
+                        video.videoLevel = videoJson.getString(Constants.VIDEO_LEVEL);
+                        video.createdAt = videoJson.getString(Constants.CREATED_AT);
 
                         try {
                             JSONObject poster = (JSONObject) videoJson.get(Constants.VIDEO_POSTER_OBJECT);

@@ -12,6 +12,7 @@ public class Constants {
     // General
     public static final String OBJECT_ID = "objectId";
     public static final String URL = "url";
+    public static final String CREATED_AT = "createdAt";
 
     // Class Videos
     public static final String VIDEO_NAME = "videoName";

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.Spinner;
 
 public class Filters extends AppCompatActivity {
@@ -13,6 +14,8 @@ public class Filters extends AppCompatActivity {
     private Spinner mVideoTypeSpinner;
     private Button mButtonFilter;
     private Spinner mVideoLevelSpinner;
+    private CheckBox mSortAlphaCheckBox;
+    private CheckBox mSortByDateCheckBox;
 
     // Filters
     private boolean mFilters = false;
@@ -20,6 +23,8 @@ public class Filters extends AppCompatActivity {
     private String mVideoType;
     private boolean mFilterByVideoLevel = false;
     private String mVideoLevel;
+    private boolean mSortBy = false;
+    private String mSortByString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +38,16 @@ public class Filters extends AppCompatActivity {
             mVideoType = getIntent().getExtras().getString("videoType");
             mFilterByVideoLevel = getIntent().getExtras().getBoolean("filterByVideoLevel");
             mVideoLevel = getIntent().getExtras().getString("videoLevel");
+            mSortBy = getIntent().getExtras().getBoolean("sortBy");
+            mSortByString = getIntent().getExtras().getString("sortString");
         }
 
         // Views
         mVideoTypeSpinner = (Spinner) findViewById(R.id.spinner_type);
         mVideoLevelSpinner = (Spinner) findViewById(R.id.spinner_level);
         mButtonFilter = (Button) findViewById(R.id.button_filter);
+        mSortAlphaCheckBox = (CheckBox) findViewById(R.id.sortByAlphabetically);
+        mSortByDateCheckBox = (CheckBox) findViewById(R.id.sortByDate);
 
         mButtonFilter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,20 +62,29 @@ public class Filters extends AppCompatActivity {
                 if (mVideoLevelSpinner.getSelectedItemId() != 0){
                     intent.putExtra("filterByVideoLevel", true);
                     intent.putExtra("videoLevel", String.valueOf(mVideoLevelSpinner.getSelectedItem()));
-
                 }
 
-                if(mVideoTypeSpinner.getSelectedItemId() != 0 || mVideoLevelSpinner.getSelectedItemId() != 0){
+                if(mSortAlphaCheckBox.isChecked()){
+                    mSortByString = Constants.VIDEO_NAME;
+                    intent.putExtra("sortBy", true);
+                    intent.putExtra("sortString", mSortByString);
+                }
+
+                if(mSortByDateCheckBox.isChecked()){
+                    mSortByString = Constants.CREATED_AT;
+                    intent.putExtra("sortBy", true);
+                    intent.putExtra("sortString", mSortByString);
+                }
+
+                if(mVideoTypeSpinner.getSelectedItemId() != 0 || mVideoLevelSpinner.getSelectedItemId() != 0
+                        || mSortAlphaCheckBox.isChecked() || mSortByDateCheckBox.isChecked()){
                     intent.putExtra("filters", true);
                 }else {
                     intent.putExtra("filters", false);
                 }
 
-
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
-
-
             }
         });
 
@@ -84,7 +102,6 @@ public class Filters extends AppCompatActivity {
                     mVideoTypeSpinner.setSelection(4);
                 }
             }
-
             if (mFilterByVideoLevel){
                 if(mVideoLevel.equals("Básico")) {
                     mVideoLevelSpinner.setSelection(1);
@@ -93,6 +110,33 @@ public class Filters extends AppCompatActivity {
                 }
             }
         }
+
+        // Set CheckBox sort
+        if(mSortBy){
+            if(mSortByString.equals(Constants.VIDEO_NAME)){
+                mSortAlphaCheckBox.setChecked(true);
+            }
+            if (mSortByString.equals(Constants.CREATED_AT)){
+                mSortByDateCheckBox.setChecked(true);
+            }
+        }
+        mSortAlphaCheckBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mSortByDateCheckBox.isChecked()){
+                    mSortByDateCheckBox.setChecked(false);
+                }
+            }
+        });
+        mSortByDateCheckBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mSortAlphaCheckBox.isChecked()){
+                    mSortAlphaCheckBox.setChecked(false);
+                }
+            }
+        });
+
 
     }
 

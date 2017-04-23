@@ -40,6 +40,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.sohamfit.sohamfitapp.VideosList" />
         </activity>
+        <activity
+            android:name=".VideoPlayer"
+            android:label="@string/title_activity_video_player"
+            android:parentActivityName=".VideosList"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.sohamfit.sohamfitapp.VideosList" />
+        </activity>
     </application>
 
 </manifest>

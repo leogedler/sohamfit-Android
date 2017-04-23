@@ -2,6 +2,7 @@
     <string name="app_name">sohamfit</string>
     <string name="action_settings">Opciones</string>
     <string name="title_activity_filters">Filtros</string>
+    <string name="title_activity_video_player"></string>
 
     <!-- Videos-->
     <string name="no_results">No hay resultados, intenta otro filtro.</string>
@@ -34,6 +35,7 @@
         <item>Básico</item>
         <item>Intermedio</item>
     </string-array>
+
 
 
 </resources>

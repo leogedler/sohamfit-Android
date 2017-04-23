@@ -76,7 +76,7 @@ public class VideosList extends AppCompatActivity {
         setContentView(R.layout.activity_videos);
 
 
-        //Receiving Intents
+        // Receiving Intents
         if (getIntent().getExtras() != null){
             mFilters = getIntent().getExtras().getBoolean("filters");
             mFilterByVideoType = getIntent().getExtras().getBoolean("filterByVideoType");
@@ -250,10 +250,11 @@ public class VideosList extends AppCompatActivity {
                         video.videoLevel = videoJson.getString(Constants.VIDEO_LEVEL);
                         video.videoLevel = videoJson.getString(Constants.VIDEO_LEVEL);
                         video.createdAt = videoJson.getString(Constants.CREATED_AT);
+                        video.videoMp4Url = videoJson.getString(Constants.VIDEO_URL);
 
                         try {
                             JSONObject poster = (JSONObject) videoJson.get(Constants.VIDEO_POSTER_OBJECT);
-                            video.videoMp4Url = poster.getString(Constants.URL);
+                            video.videoPosterUrl= poster.getString(Constants.URL);
                         } catch (JSONException e){
                             e.printStackTrace();
                         }

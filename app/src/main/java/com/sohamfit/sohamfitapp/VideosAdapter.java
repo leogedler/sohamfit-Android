@@ -1,22 +1,21 @@
 package com.sohamfit.sohamfitapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import static com.sohamfit.sohamfitapp.R.id.date;
@@ -54,16 +53,15 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.CustomView
 
         final Video videoItem = feedVideosList.get(position);
 
-        //Download image using picasso library
-        Picasso.with(mContext).load(videoItem.videoMp4Url).into(holder.imageView);
+        // Download image using picasso library
+        Picasso.with(mContext).load(videoItem.videoPosterUrl).into(holder.imageView);
 
         // Setting video info
         holder.textView.setText(videoItem.videoName);
         holder.timeView.setText(videoItem.videoDuration);
         holder.levelView.setText(StringHelper.capitalize(videoItem.videoLevel));
 
-
-
+        // Set date
         try {
             Date date = mFormatter.parse(videoItem.createdAt.replaceAll("Z$", "+0000"));
             holder.dateView.setText(mFormatter2.format(date));
@@ -71,7 +69,7 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.CustomView
             e.printStackTrace();
         }
 
-
+        // Set level
         if(videoItem.videoLevel.equals("básico")){
             holder.levelView.setTextColor(ContextCompat.getColor(mContext, R.color.colorGreen));
         }else if(videoItem.videoLevel.equals("intermedio")){
@@ -80,13 +78,13 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.CustomView
             holder.levelView.setTextColor(ContextCompat.getColor(mContext, R.color.colorRed));
         }
 
+        // Click on video card
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(mContext, "Nivel del video: "+ videoItem.videoLevel, Toast.LENGTH_SHORT).show();
-//                Intent intent = new Intent(mContext, VideoViewActivity.class);
-//                intent.putExtra("videoUrl", videoItem.getString("videoMp4Url"));
-//                mContext.startActivity(intent);
+            Intent intent = new Intent(mContext, VideoPlayer.class);
+            intent.putExtra("video", videoItem);
+            mContext.startActivity(intent);
             }
         });
     }

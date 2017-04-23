@@ -5,10 +5,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.MediaController;
-import android.widget.RelativeLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.VideoView;
+
+import com.squareup.picasso.Picasso;
 
 public class VideoPlayer extends AppCompatActivity {
 
@@ -18,40 +22,37 @@ public class VideoPlayer extends AppCompatActivity {
 
     // Views
     private VideoView mVideoView;
-    private RelativeLayout mVideoLayout;
+    private LinearLayout mVideoLayout;
     private TextView mVideoTitle;
+    private TextView mVideoDescription;
+    private TextView mInstructorName;
+    private ImageView mInstructorImage;
+    private ProgressBar mProgressBar;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_player);
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
 
         // Get video
         mVideo = getIntent().getExtras().getParcelable("video");
 
-        // Set title
-//        setTitle(mVideo.videoName);
-
-
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Views
         mVideoView = (VideoView) findViewById(R.id.videoPlayer);
-        mVideoLayout = (RelativeLayout) findViewById(R.id.videoPlayerLayout);
+        mVideoLayout = (LinearLayout) findViewById(R.id.videoPlayerLayout);
         mVideoTitle = (TextView) findViewById(R.id.videoTitle);
+        mVideoDescription = (TextView) findViewById(R.id.videoDescription);
+        mInstructorName = (TextView) findViewById(R.id.instructorName);
+        mInstructorImage = (ImageView) findViewById(R.id.instructorImage);
+        mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
 
+        // Set info
         mVideoTitle.setText(mVideo.videoName);
+        mVideoDescription.setText(mVideo.videoDescription);
+        mInstructorName.setText(StringHelper.capitalize(mVideo.videoInstructorName));
+        Picasso.with(this).load(mVideo.videoInstructorImage).transform(new RoundedTransformation(140, 0)).into(mInstructorImage);
 
 
 
@@ -67,15 +68,11 @@ public class VideoPlayer extends AppCompatActivity {
 
             public void onPrepared(MediaPlayer mediaPlayer) {
 
+                mProgressBar.setVisibility(View.GONE);
                 mVideoLayout.setVisibility(View.VISIBLE);
 
                 mMediaController.setAnchorView(mVideoView);
                 mVideoView.start();
-//                videoView.seekTo(position);
-//                if (position == 0) {
-//                    videoView.start();
-//                }
-
 
 
                 // When video Screen change size.
@@ -83,36 +80,13 @@ public class VideoPlayer extends AppCompatActivity {
                     @Override
                     public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
 
-                        // Re-Set the videoView that acts as the anchor for the MediaController
-//                        mMediaController.setAnchorView(mVideoView);
+                        mVideoView.setMinimumHeight(height);
                     }
                 });
             }
         });
 
 
-    }
-
-    // When you change direction of phone, this method will be called.
-    // It store the state of video (Current position)
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
-
-        // Store current position.
-        savedInstanceState.putInt("CurrentPosition", mVideoView.getCurrentPosition());
-        mVideoView.pause();
-    }
-
-
-    // After rotating the phone. This method is called.
-    @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-
-        // Get saved position.
-        mPosition = savedInstanceState.getInt("CurrentPosition");
-        mVideoView.seekTo(mPosition);
     }
 
 }

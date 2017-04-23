@@ -222,6 +222,9 @@ public class VideosList extends AppCompatActivity {
             params.add("order", mSortByString);
         }
 
+        // Add instructor and user
+        params.add("include", "instructor.userPointer");
+
 
         HttpUtils.getVideos("/classes/Videos", params,  new JsonHttpResponseHandler() {
 
@@ -253,8 +256,20 @@ public class VideosList extends AppCompatActivity {
                         video.videoMp4Url = videoJson.getString(Constants.VIDEO_URL);
 
                         try {
+                            // Video poster
                             JSONObject poster = (JSONObject) videoJson.get(Constants.VIDEO_POSTER_OBJECT);
                             video.videoPosterUrl= poster.getString(Constants.URL);
+
+                            // Video Instructor
+                            JSONObject instructor = (JSONObject) videoJson.get(Constants.VIDEO_INSTRUCTOR);
+                            JSONObject user = (JSONObject) instructor.get(Constants.USER_POINTER);
+
+                            // Instructor name
+                            video.videoInstructorName = user.getString(Constants.USER_FIST_NAME) + " " +user.getString(Constants.USER_LAST_NAME);
+
+                            // Instructor image
+                            JSONObject userImage = (JSONObject) user.get("profilePictureThumbnail");
+                            video.videoInstructorImage = userImage.getString(Constants.URL);
                         } catch (JSONException e){
                             e.printStackTrace();
                         }

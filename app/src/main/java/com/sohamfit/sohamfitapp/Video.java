@@ -16,6 +16,8 @@ public class Video implements Parcelable {
     public String videoPosterUrl;
     public String videoMp4Url;
     public String videoDuration;
+    public String videoInstructorName;
+    public String videoInstructorImage;
 
 
     public Video(){}
@@ -33,6 +35,8 @@ public class Video implements Parcelable {
         out.writeString(videoPosterUrl);
         out.writeString(videoMp4Url);
         out.writeString(videoDuration);
+        out.writeString(videoInstructorName);
+        out.writeString(videoInstructorImage);
     }
 
     public static final Parcelable.Creator<Video> CREATOR = new Parcelable.Creator<Video>() {
@@ -53,5 +57,7 @@ public class Video implements Parcelable {
         videoPosterUrl = in.readString();
         videoMp4Url = in.readString();
         videoDuration = in.readString();
+        videoInstructorName = in.readString();
+        videoInstructorImage = in.readString();
     }
 }

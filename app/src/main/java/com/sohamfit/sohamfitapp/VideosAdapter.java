@@ -53,7 +53,7 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.CustomView
 
         final Video videoItem = feedVideosList.get(position);
 
-        // Download image using picasso library
+        // Download image
         Picasso.with(mContext).load(videoItem.videoPosterUrl).into(holder.imageView);
 
         // Setting video info

@@ -2,11 +2,25 @@
     <string name="app_name">sohamfit</string>
     <string name="action_settings">Opciones</string>
     <string name="title_activity_filters">Filtros</string>
+    <string name="title_activity_login">Login</string>
     <string name="title_activity_video_player"></string>
+    <string name="title_activity_dispatch">DispatchActivity</string>
+
+
+    <!-- Login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Iniciar sesión</string>
+    <string name="action_sign_in_facebook">Resitrarte/Ingresar con Facebook</string>
+    <string name="login_error_message">Por favor, introduzca un Usuario y una Contraseña válidas.</string>
+    <string name="login_error_tittle">Oops!</string>
+    <string name="login_error_credentials">Email/password inválidos</string>
+    <string name="logout">Salir</string>
 
     <!-- Videos-->
     <string name="no_results">No hay resultados, intenta otro filtro.</string>
-
+    <string name="video_date_text">Publicado el</string>
+    <string name="level_tag">Nivel:</string>
 
     <!-- Filter -->
     <string name="filter_button">Filtrar</string>
@@ -36,6 +50,12 @@
         <item>Intermedio</item>
     </string-array>
 
+
+    <!-- Error dialogs -->
+    <string name="network_unavailable_tittle">Sin internet!!</string>
+    <string name="network_unavailable_message">Lo sentimos, en estos momentos no tienes conexión a internet, intenta nuevamente más tarde.</string>
+    <string name="error_updating_user_info">Lo sentimos mucho, hubo un error, intente de nuevo.</string>
+    <!-- End Error dialogs -->
 
 
 </resources>

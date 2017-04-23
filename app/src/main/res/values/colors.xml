@@ -10,4 +10,6 @@
     <color name="colorRed">#C62828</color>
     <color name="colorDarkGrey">#404040</color>
     <color name="colorGrey">#616161</color>
+    <color name="colorGreySoft">#808080</color>
+    <color name="colorGreyLight">#cccccc</color>
 </resources>

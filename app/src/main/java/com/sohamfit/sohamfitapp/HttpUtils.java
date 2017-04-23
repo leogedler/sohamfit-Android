@@ -13,7 +13,7 @@ public class HttpUtils {
     private static final String BASE_URL = Constants.SERVER_URL;
 
     public static void getVideos(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
-        client.addHeader("X-Parse-Application-Id", "sohamfitApp");
+        client.addHeader("X-Parse-Application-Id", Constants.APP_ID);
         client.addHeader("Content-Type", "application/json");
         client.get(getAbsoluteUrl(url), params, responseHandler);
     }

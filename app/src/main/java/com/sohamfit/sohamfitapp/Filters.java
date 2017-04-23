@@ -6,16 +6,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.Spinner;
+
+/**
+ * Created by leonardogedler on 4/21/17.
+ */
 
 public class Filters extends AppCompatActivity {
 
     // Views
     private Spinner mVideoTypeSpinner;
     private Button mButtonFilter;
+    private Button mButtonClearFilter;
     private Spinner mVideoLevelSpinner;
     private CheckBox mSortAlphaCheckBox;
     private CheckBox mSortByDateCheckBox;
+    private EditText mSearchTextView;
 
     // Filters
     private boolean mFilters = false;
@@ -25,6 +32,8 @@ public class Filters extends AppCompatActivity {
     private String mVideoLevel;
     private boolean mSortBy = false;
     private String mSortByString;
+    private boolean mSearch = false;
+    private String mSearchText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,27 +49,34 @@ public class Filters extends AppCompatActivity {
             mVideoLevel = getIntent().getExtras().getString("videoLevel");
             mSortBy = getIntent().getExtras().getBoolean("sortBy");
             mSortByString = getIntent().getExtras().getString("sortString");
+            mSearch = getIntent().getExtras().getBoolean("search");
+            mSearchText = getIntent().getExtras().getString("searchText");
         }
 
         // Views
         mVideoTypeSpinner = (Spinner) findViewById(R.id.spinner_type);
         mVideoLevelSpinner = (Spinner) findViewById(R.id.spinner_level);
         mButtonFilter = (Button) findViewById(R.id.button_filter);
+        mButtonClearFilter = (Button) findViewById(R.id.button_clear);
         mSortAlphaCheckBox = (CheckBox) findViewById(R.id.sortByAlphabetically);
         mSortByDateCheckBox = (CheckBox) findViewById(R.id.sortByDate);
+        mSearchTextView = (EditText) findViewById(R.id.searchInput);
 
+        // Filter button
         mButtonFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Filters.this, VideosList.class);
 
                 if (mVideoTypeSpinner.getSelectedItemId() != 0){
-                    intent.putExtra("filterByVideoType", true);
+                    mFilterByVideoType = true;
+                    intent.putExtra("filterByVideoType", mFilterByVideoType);
                     intent.putExtra("videoType", String.valueOf(mVideoTypeSpinner.getSelectedItem()));
                 }
 
                 if (mVideoLevelSpinner.getSelectedItemId() != 0){
-                    intent.putExtra("filterByVideoLevel", true);
+                    mFilterByVideoLevel = true;
+                    intent.putExtra("filterByVideoLevel", mFilterByVideoLevel);
                     intent.putExtra("videoLevel", String.valueOf(mVideoLevelSpinner.getSelectedItem()));
                 }
 
@@ -76,8 +92,14 @@ public class Filters extends AppCompatActivity {
                     intent.putExtra("sortString", mSortByString);
                 }
 
-                if(mVideoTypeSpinner.getSelectedItemId() != 0 || mVideoLevelSpinner.getSelectedItemId() != 0
-                        || mSortAlphaCheckBox.isChecked() || mSortByDateCheckBox.isChecked()){
+                if(!mSearchTextView.getText().toString().isEmpty()){
+                    mSearch = true;
+                    mSearchText = mSearchTextView.getText().toString().trim();
+                    intent.putExtra("search", true);
+                    intent.putExtra("searchText", mSearchText);
+                }
+
+                if(mSearch || mFilterByVideoType|| mFilterByVideoLevel || mSortAlphaCheckBox.isChecked() || mSortByDateCheckBox.isChecked()){
                     intent.putExtra("filters", true);
                 }else {
                     intent.putExtra("filters", false);
@@ -88,6 +110,24 @@ public class Filters extends AppCompatActivity {
             }
         });
 
+
+        // Clear Filters
+        if(mFilters){
+            mButtonClearFilter.setVisibility(View.VISIBLE);
+            mButtonClearFilter.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(Filters.this, VideosList.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                }
+            });
+        }
+
+        // Set Search
+        if(mSearch){
+            mSearchTextView.setText(mSearchText);
+        }
 
         // Set spinners options
         if (mFilters){

@@ -3,9 +3,18 @@
     <string name="action_settings">Opciones</string>
     <string name="title_activity_filters">Filtros</string>
 
+    <!-- Videos-->
+    <string name="no_results">No hay resultados, intenta otro filtro.</string>
+
 
     <!-- Filter -->
     <string name="filter_button">Filtrar</string>
+    <string name="filter_clear_button">Limpiar</string>
+    <string name="search_video_title">Búsqueda</string>
+    <string name="search_hint">Buscar</string>
+    <string name="order_byl_title">Ordenar por</string>
+    <string name="sort_by_alphabetically">Alfabéticamente</string>
+    <string name="sort_by_date">Fecha</string>
 
 
     <!-- Spinner video type -->
@@ -26,9 +35,6 @@
         <item>Intermedio</item>
     </string-array>
 
-    <string name="order_byl_title">Ordenar por</string>
-    <string name="sort_by_alphabetically">Alfabéticamente</string>
-    <string name="sort_by_date">Fecha</string>
 
 </resources>
 

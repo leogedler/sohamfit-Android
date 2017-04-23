@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
@@ -8,121 +10,172 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:minWidth="300dp"
-        android:minHeight="400dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:context="com.sohamfit.sohamfitapp.Filters"
-        tools:showIn="@layout/activity_filters">
+        tools:showIn="@layout/activity_filters"
+        android:paddingTop="15dp">
+
+        <Button
+            android:id="@+id/button_clear"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/soham_button"
+            android:text="@string/filter_clear_button"
+            android:textColor="@color/colorWhite"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/searchTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:alpha="100"
+            android:background="@color/colorBackBlack"
+            android:padding="8dp"
+            android:text="@string/search_video_title"
+            android:textColor="@color/colorWhite"
+            android:textSize="15sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_clear" />
+
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/searchInputLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/searchTitle"
+            android:layout_marginTop="20dp"
+            android:textColorHint="@color/colorPrimary"
+            app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
+
+            <EditText
+                android:id="@+id/searchInput"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:hint="@string/search_hint"
+                android:backgroundTint="@color/colorPrimary"
+                android:textColor="@color/colorPrimary"
+                android:textCursorDrawable="@null"/>
+
+        </android.support.design.widget.TextInputLayout>
+
 
         <TextView
             android:id="@+id/videoTypeTitle"
-            android:layout_marginTop="15dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/spinner_type_video_title"
-            android:textSize="15sp"
-            android:background="@color/colorBackBlack"
+            android:layout_marginTop="15dp"
             android:alpha="100"
-            android:textColor="@color/colorWhite"
+            android:background="@color/colorBackBlack"
             android:padding="8dp"
+            android:text="@string/spinner_type_video_title"
+            android:textColor="@color/colorWhite"
+            android:textSize="15sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/searchInputLayout" />
 
 
         <Spinner
             android:id="@+id/spinner_type"
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:entries="@array/video_type_array"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/videoTypeTitle"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/videoTypeTitle" />
 
 
         <TextView
             android:id="@+id/videoLevelTitle"
-            android:layout_marginTop="30dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/spinner_level_video_title"
-            android:textSize="15sp"
-            android:background="@color/colorBackBlack"
+            android:layout_marginTop="30dp"
             android:alpha="100"
-            android:textColor="@color/colorWhite"
+            android:background="@color/colorBackBlack"
             android:padding="8dp"
+            android:text="@string/spinner_level_video_title"
+            android:textColor="@color/colorWhite"
+            android:textSize="15sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spinner_type"/>
+            app:layout_constraintTop_toBottomOf="@+id/spinner_type" />
 
         <Spinner
             android:id="@+id/spinner_level"
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:entries="@array/video_level_array"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/videoLevelTitle"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/videoLevelTitle" />
 
 
         <TextView
             android:id="@+id/sortByTitle"
-            android:layout_marginTop="30dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/order_byl_title"
-            android:textSize="15sp"
-            android:background="@color/colorBackBlack"
+            android:layout_marginTop="30dp"
             android:alpha="100"
-            android:textColor="@color/colorWhite"
+            android:background="@color/colorBackBlack"
             android:padding="8dp"
+            android:text="@string/order_byl_title"
+            android:textColor="@color/colorWhite"
+            android:textSize="15sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spinner_level"/>
+            app:layout_constraintTop_toBottomOf="@+id/spinner_level" />
 
 
         <android.support.v7.widget.AppCompatCheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/sort_by_alphabetically"
             android:id="@+id/sortByAlphabetically"
-            android:layout_marginTop="12dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sortByTitle"
-            android:fontFamily="sans-serif"
-            android:textColor="@color/colorBackBlack"
-            app:buttonTint="@color/colorPrimaryDark"/>
-
-        <android.support.v7.widget.AppCompatCheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/sort_by_date"
-            android:id="@+id/sortByDate"
-            android:layout_marginTop="15dp"
-            app:layout_constraintLeft_toLeftOf="@+id/sortByAlphabetically"
-            app:layout_constraintTop_toBottomOf="@+id/sortByAlphabetically"
+            android:layout_marginTop="12dp"
             android:fontFamily="sans-serif"
+            android:text="@string/sort_by_alphabetically"
             android:textColor="@color/colorBackBlack"
-            app:buttonTint="@color/colorPrimaryDark" />
+            app:buttonTint="@color/colorPrimaryDark"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sortByTitle" />
 
-
+        <android.support.v7.widget.AppCompatCheckBox
+            android:id="@+id/sortByDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:fontFamily="sans-serif"
+            android:text="@string/sort_by_date"
+            android:textColor="@color/colorBackBlack"
+            app:buttonTint="@color/colorPrimaryDark"
+            app:layout_constraintLeft_toLeftOf="@+id/sortByAlphabetically"
+            app:layout_constraintTop_toBottomOf="@+id/sortByAlphabetically" />
 
 
         <Button
             android:id="@+id/button_filter"
             android:layout_width="0dp"
             android:layout_height="48dp"
-            android:layout_marginTop="40dp"
-            android:text="@string/filter_button"
+            android:layout_marginTop="20dp"
             android:background="@drawable/soham_button"
+            android:text="@string/filter_button"
             android:textColor="@color/colorWhite"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@+id/sortByDate"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
 
     </android.support.constraint.ConstraintLayout>
 </ScrollView>

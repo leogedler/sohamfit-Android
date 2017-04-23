@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -22,11 +23,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
 import static com.sohamfit.sohamfitapp.R.id.fab;
+
+/**
+ * Created by leonardogedler on 4/21/17.
+ */
 
 public class VideosList extends AppCompatActivity {
 
@@ -50,6 +56,7 @@ public class VideosList extends AppCompatActivity {
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private FloatingActionButton mFab;
     private Toolbar mToolbar;
+    private TextView mNoResults;
 
     // Filters
     private boolean mFilters = false;
@@ -59,12 +66,15 @@ public class VideosList extends AppCompatActivity {
     private String mVideoLevel;
     private boolean mSortBy = false;
     private String mSortByString;
+    private boolean mSearch = false;
+    private String mSearchText;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_videos);
+
 
         //Receiving Intents
         if (getIntent().getExtras() != null){
@@ -75,11 +85,14 @@ public class VideosList extends AppCompatActivity {
             mVideoLevel = getIntent().getExtras().getString("videoLevel");
             mSortBy = getIntent().getExtras().getBoolean("sortBy");
             mSortByString = getIntent().getExtras().getString("sortString");
+            mSearch = getIntent().getExtras().getBoolean("search");
+            mSearchText = getIntent().getExtras().getString("searchText");
         }
 
         // Views
         mTopProgressBar = (ProgressBar) findViewById(R.id.top_progress_bar);
         mBottomProgressBar = (ProgressBar) findViewById(R.id.bottom_progress_bar);
+        mNoResults = (TextView) findViewById(R.id.noResultsText);
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.activity_video_list_refresh_layout);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
@@ -92,13 +105,17 @@ public class VideosList extends AppCompatActivity {
 //                        .setAction("Action", null).show();
                 Intent intent = new Intent(VideosList.this, Filters.class);
                 if(mFilters){
-                    intent.putExtra("filters", mFilters);
+                    intent.putExtra("filters", true);
+                    if(mSearch){
+                        intent.putExtra("search", true);
+                        intent.putExtra("searchText", mSearchText);
+                    }
                     if(mFilterByVideoType){
-                        intent.putExtra("filterByVideoType", mFilterByVideoType);
+                        intent.putExtra("filterByVideoType", true);
                         intent.putExtra("videoType", mVideoType);
                     }
                     if(mFilterByVideoLevel){
-                        intent.putExtra("filterByVideoLevel", mFilterByVideoLevel);
+                        intent.putExtra("filterByVideoLevel", true);
                         intent.putExtra("videoLevel", mVideoLevel);
                     }
                     if(mSortBy){
@@ -133,7 +150,6 @@ public class VideosList extends AppCompatActivity {
                 if (loading) {
                     if ( (visibleItemCount + pastVisiblesItems) >= totalItemCount) {
                         loading = false;
-                        Log.v("...", "Last Item Wow !");
                         mBottomProgressBar.setVisibility(View.VISIBLE);
                         skip = skip + videoPerLoad;
                         getVideos(skip);
@@ -171,37 +187,48 @@ public class VideosList extends AppCompatActivity {
         params.add("skip", String.valueOf(skip));
 
         //Filters
-        // Order by
-        if(mSortBy){
-            params.add("order", mSortByString);
-        }
-        // Filter by
-        if (mFilterByVideoType || mFilterByVideoLevel) {
-            JSONObject filterBy = new JSONObject();
+        JSONObject objectWhere = new JSONObject();
+        // Search or Filter by
+        if (mSearch || mFilterByVideoType || mFilterByVideoLevel) {
+            // Search
+            if(mSearch){
+                String[] searchArray = mSearchText.toLowerCase().split("\\s+");
+                JSONArray wordsArray = new JSONArray(Arrays.asList(searchArray));
+                try {
+                    objectWhere.put("words", new JSONObject().put("$all", wordsArray));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
             if(mFilterByVideoType){
                 try {
-                    filterBy.put("subcategory", mVideoType.toLowerCase());
+                    objectWhere.put("subcategory", mVideoType.toLowerCase());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
             if(mFilterByVideoLevel){
                 try {
-                    filterBy.put("level", mVideoLevel.toLowerCase());
+                    objectWhere.put("level", mVideoLevel.toLowerCase());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
-            params.add("where", filterBy.toString());
-        }
+            params.add("where", objectWhere.toString());
 
+        }
+        // Order by
+        if(mSortBy){
+            params.add("order", mSortByString);
+        }
 
 
         HttpUtils.getVideos("/classes/Videos", params,  new JsonHttpResponseHandler() {
 
             @Override
             public void onStart() {
-                // Initiated the request
+                // Hide no results text
+                mNoResults.setVisibility(View.GONE);
             }
 
             @Override
@@ -243,26 +270,15 @@ public class VideosList extends AppCompatActivity {
                     }
 
                     Log.d("videos", "---->>:" + mVideos.size());
+                    // Check fot videos size
+                    if(mVideos.size() == 0){
+                        mNoResults.setVisibility(View.VISIBLE);
+                    }
 
                 } catch (JSONException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
-            }
-
-            @Override
-            public void onRetry(int retryNo) {
-                // Request was retried
-            }
-
-            @Override
-            public void onProgress(long bytesWritten, long totalSize) {
-                // Progress notification
-            }
-
-            @Override
-            public void onFinish() {
-                // Completed the request (either success or failure)
             }
 
         });

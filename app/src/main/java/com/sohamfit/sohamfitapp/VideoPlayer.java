@@ -7,9 +7,9 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
 
@@ -28,7 +28,7 @@ public class VideoPlayer extends AppCompatActivity {
 
     // Views
     private VideoView mVideoView;
-    private LinearLayout mVideoLayout;
+    private RelativeLayout mVideoLayout;
     private TextView mVideoTitle;
     private TextView mVideoDescription;
     private TextView mInstructorName;
@@ -36,7 +36,6 @@ public class VideoPlayer extends AppCompatActivity {
     private TextView mLevel;
     private ImageView mInstructorImage;
     private ProgressBar mProgressBar;
-
 
 
     @Override
@@ -50,7 +49,7 @@ public class VideoPlayer extends AppCompatActivity {
 
         // Views
         mVideoView = (VideoView) findViewById(R.id.videoPlayer);
-        mVideoLayout = (LinearLayout) findViewById(R.id.videoPlayerLayout);
+        mVideoLayout = (RelativeLayout) findViewById(R.id.videoPlayerLayout);
         mVideoTitle = (TextView) findViewById(R.id.videoTitle);
         mVideoDescription = (TextView) findViewById(R.id.videoDescription);
         mInstructorName = (TextView) findViewById(R.id.instructorName);
@@ -100,17 +99,8 @@ public class VideoPlayer extends AppCompatActivity {
                 mMediaController.setAnchorView(mVideoView);
                 mVideoView.start();
 
-
-                // When video Screen change size.
-                mediaPlayer.setOnVideoSizeChangedListener(new MediaPlayer.OnVideoSizeChangedListener() {
-                    @Override
-                    public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
-                        mVideoView.setMinimumHeight(height);
-                    }
-                });
             }
         });
-
 
     }
 

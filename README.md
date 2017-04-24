@@ -23,6 +23,7 @@ If a list item is clicked a video player activity is opened where the video info
 ### Point 5
 API endpoint: http://sohamfit.com/api/
 This is a real API endpoint, not a mockup.
+This app consume the rest API using and http class service. This service can be modified to consume service from another rest API. (It is fully customizable).
 
 ### Point 6
 Currently there are 59 video on sohamfit, but in the future more will be added. To handle this the app implements pagination in form of a infinity scroll. When the video list is created only 10 videos are loaded, when the user scroll to the bottom 10 more videos will be fetched from the server and added to the bottom of the list. This process is repeated until the last video is loaded.
@@ -35,6 +36,7 @@ With this I mean that the data can be modified and consumed from differents thre
 There is a clear porject structure with:
 * Activities. 
 * Layouts.
+* Service class (http requests).
 * Drawables.
 * Model (video model).
 * Constants.

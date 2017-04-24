@@ -81,23 +81,22 @@ public class VideoPlayer extends AppCompatActivity {
         }
 
 
-
-
+        // Set controller
         mMediaController = new MediaController(VideoPlayer.this);
-//        mMediaController.setAnchorView(mVideoView);
         Uri videoUri = Uri.parse(mVideo.videoMp4Url);
         mVideoView.setMediaController(mMediaController);
         mVideoView.setVideoURI(videoUri);
-//        mVideoView.start();
 
         // When the video file ready for playback.
         mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
 
             public void onPrepared(MediaPlayer mediaPlayer) {
 
+                // Change visibility
                 mProgressBar.setVisibility(View.GONE);
                 mVideoLayout.setVisibility(View.VISIBLE);
 
+                // Anchor controller
                 mMediaController.setAnchorView(mVideoView);
                 mVideoView.start();
 
@@ -106,7 +105,6 @@ public class VideoPlayer extends AppCompatActivity {
                 mediaPlayer.setOnVideoSizeChangedListener(new MediaPlayer.OnVideoSizeChangedListener() {
                     @Override
                     public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
-
                         mVideoView.setMinimumHeight(height);
                     }
                 });

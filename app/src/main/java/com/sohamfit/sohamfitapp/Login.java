@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.parse.LogInCallback;
 import com.parse.ParseException;
@@ -19,6 +20,7 @@ public class Login extends AppCompatActivity {
     private EditText mEmailView;
     private EditText mPasswordView;
     private Button mSignInButtonView;
+    private TextView mRegisterText;
 
     protected Dialog progressDialog;
 
@@ -31,12 +33,22 @@ public class Login extends AppCompatActivity {
         mEmailView = (EditText) findViewById(R.id.email);
         mPasswordView = (EditText) findViewById(R.id.password);
         mSignInButtonView = (Button) findViewById(R.id.email_sign_in_button);
+        mRegisterText = (TextView) findViewById(R.id.registerText);
 
         // Sign in button
         mSignInButtonView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 attemptLogin();
+            }
+        });
+
+        // Register button
+        mRegisterText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Login.this, Register.class);
+                startActivity(intent);
             }
         });
     }
@@ -65,11 +77,8 @@ public class Login extends AppCompatActivity {
                 public void done(ParseUser parseUser, ParseException e) {
 
                     if (e == null) {
-
                         //Start an intent for the Dispatch in activity
                         enterIntoDispatchActivity();
-
-
                     } else {
 
                         Login.this.progressDialog.dismiss();

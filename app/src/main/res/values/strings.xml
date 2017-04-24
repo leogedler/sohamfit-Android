@@ -15,7 +15,15 @@
     <string name="login_error_message">Por favor, introduzca un Usuario y una Contraseña válidas.</string>
     <string name="login_error_tittle">Oops!</string>
     <string name="login_error_credentials">Email/password inválidos</string>
-    <string name="logout">Salir</string>
+    <string name="logout">Logout</string>
+
+    <!-- Register -->
+    <string name="prompt_first_name">Nombre</string>
+    <string name="prompt_last_name">Apellido</string>
+    <string name="action_register">Registrate</string>
+    <string name="sign_up_error_message_data">Por favor, completa todo los campos.</string>
+    <string name="sign_up_error_message">Hubo un error, vuelve a intentarlo</string>
+    <string name="sign_up_error_tittle">Oops!</string>
 
     <!-- Videos-->
     <string name="no_results">No hay resultados, intenta otro filtro.</string>
@@ -55,6 +63,7 @@
     <string name="network_unavailable_tittle">Sin internet!!</string>
     <string name="network_unavailable_message">Lo sentimos, en estos momentos no tienes conexión a internet, intenta nuevamente más tarde.</string>
     <string name="error_updating_user_info">Lo sentimos mucho, hubo un error, intente de nuevo.</string>
+    <string name="title_activity_register">Register</string>
     <!-- End Error dialogs -->
 
 

@@ -7,7 +7,7 @@ package com.sohamfit.sohamfitapp;
 public class Constants {
 
     // Server url
-    public static final String SERVER_URL = "http://35.161.117.200/api/";
+    public static final String SERVER_URL = "http://sohamfit.com/api/";
     public static final String APP_ID = "sohamfitApp";
 
     // General

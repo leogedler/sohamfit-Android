@@ -13,4 +13,6 @@
     <color name="colorGreySoft">#808080</color>
     <color name="colorGreyLight">#cccccc</color>
     <color name="colorBlue">#5ebdb2</color>
+    <color name="colorFacebook">#3b5998</color>
+    <color name="colorFacebook2">#8b9dc3</color>
 </resources>

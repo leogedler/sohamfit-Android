@@ -80,6 +80,17 @@
                 android:background="@drawable/soham_button"
                 android:textStyle="bold" />
 
+            <Button
+                android:id="@+id/facebook_register_button"
+                style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/action_sign_in_facebook"
+                android:textStyle="bold"
+                android:textColor="@color/colorWhite"
+                android:background="@drawable/facebook_button"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -102,8 +103,7 @@ public class VideosList extends AppCompatActivity {
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
+
                 Intent intent = new Intent(VideosList.this, Filters.class);
                 if(mFilters){
                     intent.putExtra("filters", true);
@@ -242,7 +242,6 @@ public class VideosList extends AppCompatActivity {
                     JSONObject result = new JSONObject(response.toString());
                     JSONArray videosArray = result.getJSONArray("results");
 
-
                     for (int i=0;i<videosArray.length();i++){
                         JSONObject videoJson = videosArray.getJSONObject(i);
 
@@ -269,7 +268,7 @@ public class VideosList extends AppCompatActivity {
                             video.videoInstructorName = user.getString(Constants.USER_FIST_NAME) + " " +user.getString(Constants.USER_LAST_NAME);
 
                             // Instructor image
-                            JSONObject userImage = (JSONObject) user.get("profilePictureThumbnail");
+                            JSONObject userImage = (JSONObject) user.get(Constants.IMAGE_THUMBNAIL);
                             video.videoInstructorImage = userImage.getString(Constants.URL);
                         } catch (JSONException e){
                             e.printStackTrace();
@@ -298,6 +297,19 @@ public class VideosList extends AppCompatActivity {
                 }
             }
 
+            @Override
+            public void onRetry(int retryNo) {
+                super.onRetry(retryNo);
+
+                // Slow service toast
+                Toast.makeText(VideosList.this, getString(R.string.slow_service), Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                Log.d("Fail", "Server fail");
+            }
         });
     }
 

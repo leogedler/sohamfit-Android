@@ -6,16 +6,18 @@
     <string name="title_activity_video_player"></string>
     <string name="title_activity_dispatch">DispatchActivity</string>
 
+    <string name="facebook_app_id">992585987472820</string>
+
 
     <!-- Login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Iniciar sesión</string>
-    <string name="action_sign_in_facebook">Resitrarte/Ingresar con Facebook</string>
+    <string name="action_sign_in_facebook">Ingresar/Resitrarte con Facebook</string>
     <string name="login_error_message">Por favor, introduzca un Usuario y una Contraseña válidas.</string>
     <string name="login_error_tittle">Oops!</string>
     <string name="login_error_credentials">Email/password inválidos</string>
-    <string name="logout">Logout</string>
+    <string name="logout">Cerrar sesión</string>
 
     <!-- Register -->
     <string name="prompt_first_name">Nombre</string>
@@ -64,6 +66,7 @@
     <string name="network_unavailable_message">Lo sentimos, en estos momentos no tienes conexión a internet, intenta nuevamente más tarde.</string>
     <string name="error_updating_user_info">Lo sentimos mucho, hubo un error, intente de nuevo.</string>
     <string name="title_activity_register">Register</string>
+    <string name="slow_service">Servico lento...</string>
     <!-- End Error dialogs -->
 
 

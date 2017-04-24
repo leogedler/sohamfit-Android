@@ -17,6 +17,10 @@ public class Constants {
     public static final String USER_POINTER = "userPointer";
     public static final String USER_FIST_NAME = "firstName";
     public static final String USER_LAST_NAME = "lastName";
+    public static final String USERNAME = "username";
+    public static final String FACEBOOK_ID = "facebookId";
+    public static final String USER_EMAIL = "email";
+    public static final String IMAGE_THUMBNAIL = "profilePictureThumbnail";
 
     // Class Videos
     public static final String VIDEO_NAME = "videoName";

@@ -46,11 +46,10 @@ public class VideosList extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
     private VideosAdapter mAdapter;
-    private int pastVisiblesItems, visibleItemCount, totalItemCount;
-    private boolean loading = true;
-    private int skip = 0;
-    private int videoPerLoad = 10;
-
+    private int mPastVisiblesItems, mVisibleItemCount, mTotalItemCount;
+    private boolean mLoading = true;
+    private int mSkip = 0;
+    private int mVideoPerLoad = 10;
 
     // Views
     private ProgressBar mTopProgressBar;
@@ -99,6 +98,7 @@ public class VideosList extends AppCompatActivity {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
+        // Set filters floating button
         mFab = (FloatingActionButton) findViewById(fab);
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,16 +144,16 @@ public class VideosList extends AppCompatActivity {
             {
             // Check for scroll down
             if(dy > 0) {
-                visibleItemCount = mLayoutManager.getChildCount();
-                totalItemCount = mLayoutManager.getItemCount();
-                pastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
+                mVisibleItemCount = mLayoutManager.getChildCount();
+                mTotalItemCount = mLayoutManager.getItemCount();
+                mPastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
 
-                if (loading) {
-                    if ( (visibleItemCount + pastVisiblesItems) >= totalItemCount) {
-                        loading = false;
+                if (mLoading) {
+                    if ( (mVisibleItemCount + mPastVisiblesItems) >= mTotalItemCount) {
+                        mLoading = false;
                         mBottomProgressBar.setVisibility(View.VISIBLE);
-                        skip = skip + videoPerLoad;
-                        getVideos(skip);
+                        mSkip = mSkip + mVideoPerLoad;
+                        getVideos(mSkip);
                     }
                 }
             }
@@ -166,8 +166,8 @@ public class VideosList extends AppCompatActivity {
             @Override
             public void onRefresh() {
             mVideos.clear();
-            skip = 0;
-            getVideos(skip);
+            mSkip = 0;
+            getVideos(mSkip);
             }
         });
         mSwipeRefreshLayout.setColorSchemeResources(
@@ -175,16 +175,18 @@ public class VideosList extends AppCompatActivity {
             R.color.colorPrimaryDark);
 
         // Get Videos
-        getVideos(skip);
+        getVideos(mSkip);
 
     }
 
+    // Get videos method using http get request pagination and filters
     public void getVideos(final int skip){
 
+        // Params
         RequestParams params = new RequestParams();
 
         // Pagination
-        params.add("limit", String.valueOf(videoPerLoad));
+        params.add("limit", String.valueOf(mVideoPerLoad));
         params.add("skip", String.valueOf(skip));
 
         //Filters
@@ -226,22 +228,23 @@ public class VideosList extends AppCompatActivity {
         // Add instructor and user
         params.add("include", "instructor.userPointer");
 
-
+        // Service class
         HttpUtils.getVideos("/classes/Videos", params,  new JsonHttpResponseHandler() {
 
             @Override
             public void onStart() {
-                // Hide no results text
+                // Hide no-results text
                 mNoResults.setVisibility(View.GONE);
             }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                loading = true;
+                mLoading = true;
                 try {
                     JSONObject result = new JSONObject(response.toString());
                     JSONArray videosArray = result.getJSONArray("results");
 
+                    // Create a Video object
                     for (int i=0;i<videosArray.length();i++){
                         JSONObject videoJson = videosArray.getJSONObject(i);
 
@@ -278,7 +281,7 @@ public class VideosList extends AppCompatActivity {
                     }
 
                     if (!mViewStop) {
-
+                        // Set videos in the list adapter
                         mTopProgressBar.setVisibility(View.GONE);
                         mBottomProgressBar.setVisibility(View.GONE);
                         mSwipeRefreshLayout.setRefreshing(false);
@@ -293,6 +296,7 @@ public class VideosList extends AppCompatActivity {
 
                 } catch (JSONException e) {
                     // TODO Auto-generated catch block
+                    Log.d(TAG, e.getMessage());
                     e.printStackTrace();
                 }
             }

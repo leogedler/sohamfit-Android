@@ -40,7 +40,7 @@ public class Filters extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filters);
 
-        //Receiving Intents
+        // Receiving Intents
         if (getIntent().getExtras() != null){
             mFilters = getIntent().getExtras().getBoolean("filters");
             mFilterByVideoType = getIntent().getExtras().getBoolean("filterByVideoType");

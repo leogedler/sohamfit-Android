@@ -68,7 +68,8 @@ public class Register extends AppCompatActivity {
 
 
                     Register.this.progressDialog = ProgressDialog.show(Register.this, "", "Registrando...", true);
-                    // create the new user
+
+                    // Create the new user and sign-up using Parse SDK
                     ParseUser newUser = new ParseUser();
                     newUser.setUsername(mEmail);
                     newUser.setPassword(mPassword);
@@ -81,7 +82,7 @@ public class Register extends AppCompatActivity {
 
                             if (e == null){
 
-                                //Start an intent for the Dispatch in activity
+                                // Start an intent for the Dispatch in activity
                                 enterIntoDispatchActivity();
                             }
                             else {

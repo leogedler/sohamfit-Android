@@ -29,30 +29,29 @@ public class DispatchActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        // Check if network if available
         if (isNetworkAvailable()){
             if (ParseUser.getCurrentUser() != null) {
                 ParseUser.getCurrentUser().fetchInBackground(new GetCallback<ParseUser>() {
                     @Override
                     public void done(ParseUser parseUser, ParseException e) {
 
-                        if (e == null) {
+                    if (e == null) {
 
-                            //Start an intent for the MainActivity in activity
-                            Intent intent = new Intent(DispatchActivity.this, VideosList.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            startActivity(intent);
+                        //Start an intent for the MainActivity in activity
+                        Intent intent = new Intent(DispatchActivity.this, VideosList.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
 
-                        }else {
+                    }else {
 
-                            Log.d(TAG, e.getMessage());
-                            ParseUser.logOut();
-                            navigateToPreLaunch();
-
-                        }
+                        Log.d(TAG, e.getMessage());
+                        ParseUser.logOut();
+                        navigateToPreLaunch();
+                    }
                     }
                 });
-
 
             }else {
                 navigateToPreLaunch();

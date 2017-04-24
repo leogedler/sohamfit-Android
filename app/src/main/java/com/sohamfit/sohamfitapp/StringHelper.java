@@ -3,7 +3,7 @@ package com.sohamfit.sohamfitapp;
 /**
  * Created by leonardogedler on 4/22/17.
  */
-
+// String helper for capitalization
 public class StringHelper {
     public static String capitalize(String s) {
         String[] array = s.split("\\s+");

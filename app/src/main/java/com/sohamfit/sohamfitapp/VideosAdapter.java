@@ -26,6 +26,7 @@ import static com.sohamfit.sohamfitapp.R.id.date;
  * Created by leonardogedler on 4/21/17.
  */
 
+// Video list adapter
 public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.CustomViewHolder> {
     private List<Video> feedVideosList;
     protected SimpleDateFormat mFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
@@ -37,7 +38,6 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.CustomView
     public VideosAdapter(Context context, List<Video> feedVideosList) {
         this.feedVideosList = feedVideosList;
         this.mContext = context;
-
     }
 
     @Override

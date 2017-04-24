@@ -33,6 +33,7 @@ public class Login extends AppCompatActivity {
 
     public static final String TAG = Login.class.getSimpleName();
 
+    // Views
     private EditText mEmailView;
     private EditText mPasswordView;
     private Button mSignInButton;
@@ -102,7 +103,8 @@ public class Login extends AppCompatActivity {
             dialog.show();
         }else {
             Login.this.progressDialog = ProgressDialog.show(Login.this, "", "Ingresando...", true);
-            // login a user
+
+            // Login a user using Parse SDK
             ParseUser.logInInBackground(mEmail, password, new LogInCallback() {
                 @Override
                 public void done(ParseUser parseUser, ParseException e) {
@@ -134,7 +136,7 @@ public class Login extends AppCompatActivity {
         ParseFacebookUtils.onActivityResult(requestCode, resultCode, data);
     }
 
-
+    // Login or sign-up using Facebook and parse SDK.
     private void onFacebookButtonClick() {
 
 

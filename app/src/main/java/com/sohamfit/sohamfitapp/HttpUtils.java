@@ -8,6 +8,7 @@ import com.loopj.android.http.RequestParams;
  * Created by leonardogedler on 4/21/17.
  */
 
+// Services class
 public class HttpUtils {
     private static AsyncHttpClient client = new AsyncHttpClient();
     private static final String BASE_URL = Constants.SERVER_URL;

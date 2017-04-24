@@ -12,12 +12,13 @@ import android.graphics.Shader;
  * Created by leonardogedler on 4/23/17.
  */
 
+// Transformation for Picasso
 public class RoundedTransformation implements com.squareup.picasso.Transformation {
     private final int radius;
-    private final int margin;  // dp
+    private final int margin;
 
-    // radius is corner radii in dp
-    // margin is the board in dp
+    // Radius is corner radio in dp
+    // Margin is the board in dp
     public RoundedTransformation(final int radius, final int margin) {
         this.radius = radius;
         this.margin = margin;

@@ -46,7 +46,6 @@ public class VideoPlayer extends AppCompatActivity {
         // Get video
         mVideo = getIntent().getExtras().getParcelable("video");
 
-
         // Views
         mVideoView = (VideoView) findViewById(R.id.videoPlayer);
         mVideoLayout = (RelativeLayout) findViewById(R.id.videoPlayerLayout);
@@ -78,7 +77,6 @@ public class VideoPlayer extends AppCompatActivity {
         }else{
             mLevel.setTextColor(ContextCompat.getColor(this, R.color.colorRed));
         }
-
 
         // Set controller
         mMediaController = new MediaController(VideoPlayer.this);

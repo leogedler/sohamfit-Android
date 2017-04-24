@@ -25,9 +25,9 @@
             android:layout_height="wrap_content"
             android:alpha="100"
             android:background="@color/colorBackBlack"
-            android:padding="8dp"
+            android:padding="10dp"
             android:textColor="@color/colorWhite"
-            android:textSize="10sp"
+            android:textSize="12sp"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
@@ -42,9 +42,9 @@
             android:alpha="100"
             android:background="@color/colorBackBlack"
             android:maxLines="3"
-            android:padding="8dp"
+            android:padding="10dp"
             android:textColor="@color/colorWhite"
-            android:textSize="15sp" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/level"
@@ -55,7 +55,8 @@
             android:layout_centerVertical="true"
             android:alpha="100"
             android:background="@color/colorBackBlack"
-            android:padding="8dp" />
+            android:padding="10dp"
+            android:textSize="12sp"/>
 
         <TextView
             android:id="@+id/date"
@@ -67,8 +68,8 @@
             android:textColor="@color/colorWhite"
             android:background="@color/colorBackBlack"
             android:alpha="100"
-            android:padding="8dp"
-            android:textSize="10sp"/>
+            android:padding="10dp"
+            android:textSize="12sp"/>
 
     </RelativeLayout>
 </android.support.v7.widget.CardView>

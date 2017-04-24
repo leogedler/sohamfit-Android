@@ -6,7 +6,7 @@ import android.os.Parcelable;
 /**
  * Created by leonardogedler on 4/21/17.
  */
-
+// Video Model Class
 public class Video implements Parcelable {
     public String objectId;
     public String createdAt;

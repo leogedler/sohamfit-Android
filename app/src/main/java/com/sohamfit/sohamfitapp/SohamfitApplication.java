@@ -14,12 +14,12 @@ public class SohamfitApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+        // Initialize Parse SDK
         Parse.initialize(new Parse.Configuration.Builder(this)
                 .applicationId(Constants.APP_ID)
                 .server(Constants.SERVER_URL)
                 .build()
         );
-
         ParseFacebookUtils.initialize(this);
     }
 }
